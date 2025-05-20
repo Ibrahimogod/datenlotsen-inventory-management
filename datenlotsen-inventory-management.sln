@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Data", "Datenlotsen.InventoryManagement.Data\Datenlotsen.InventoryManagement.Data.csproj", "{9940578E-B039-485C-960E-106656EAF88E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Tests", "Datenlotsen.InventoryManagement.Tests\Datenlotsen.InventoryManagement.Tests.csproj", "{BD3080E2-269F-4256-8007-49DB9E92158A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.WPF.Tests", "Datenlotsen.InventoryManagement.WPF.Tests\Datenlotsen.InventoryManagement.WPF.Tests.csproj", "{41434552-E718-4C1D-8ECE-A081E940D5A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +39,13 @@ Global
 		{9940578E-B039-485C-960E-106656EAF88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9940578E-B039-485C-960E-106656EAF88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9940578E-B039-485C-960E-106656EAF88E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3080E2-269F-4256-8007-49DB9E92158A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3080E2-269F-4256-8007-49DB9E92158A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3080E2-269F-4256-8007-49DB9E92158A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3080E2-269F-4256-8007-49DB9E92158A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
