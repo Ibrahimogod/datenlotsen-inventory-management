@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.WPF", "Datenlotsen.InventoryManagement.WPF\Datenlotsen.InventoryManagement.WPF.csproj", "{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.API", "Datenlotsen.InventoryManagement.API\Datenlotsen.InventoryManagement.API.csproj", "{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49EF2B5D-D469-409F-A969-A4689063D90F}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement", "Datenlotsen.InventoryManagement\Datenlotsen.InventoryManagement.csproj", "{C09E7764-85F5-4D3A-996F-7F86D02A3841}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Data", "Datenlotsen.InventoryManagement.Data\Datenlotsen.InventoryManagement.Data.csproj", "{9940578E-B039-485C-960E-106656EAF88E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C09E7764-85F5-4D3A-996F-7F86D02A3841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C09E7764-85F5-4D3A-996F-7F86D02A3841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C09E7764-85F5-4D3A-996F-7F86D02A3841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C09E7764-85F5-4D3A-996F-7F86D02A3841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9940578E-B039-485C-960E-106656EAF88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9940578E-B039-485C-960E-106656EAF88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9940578E-B039-485C-960E-106656EAF88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9940578E-B039-485C-960E-106656EAF88E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
