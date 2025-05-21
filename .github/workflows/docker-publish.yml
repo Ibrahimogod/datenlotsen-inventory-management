@@ -1,0 +1,121 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Datenlotsen.InventoryManagement/**'
+      - 'Datenlotsen.InventoryManagement.API/**'
+      - 'Datenlotsen.InventoryManagement.Data/**'
+      - 'Datenlotsen.InventoryManagement.Shared.Data/**'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-api
+  VERSION: ${{ github.event.inputs.version || github.ref_name }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ env.VERSION }}
+            type=sha,prefix=,format=short
+          labels: |
+            org.opencontainers.image.author=ibadr
+            org.opencontainers.image.maintainer=ibadr
+            org.opencontainers.image.title=Datenlotsen Inventory Management API
+            org.opencontainers.image.description=Inventory Management service for Datenlotsen
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.version=${{ env.VERSION }}
+
+      - name: Display Docker tags
+        run: |
+          echo "Docker image will be tagged with:"
+          echo "${{ steps.meta.outputs.tags }}" | tr ' ' '\n' | while read tag; do
+            echo "- ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$tag"
+          done
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Datenlotsen.InventoryManagement.API/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+
+      - name: Create Git Tag
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+          git tag -a "v${{ env.VERSION }}" -m "Release v${{ env.VERSION }}"
+          git push origin "v${{ env.VERSION }}"
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: Release v${{ env.VERSION }}
+          body: |
+            ## Docker Image
+            The latest Docker image is available at:
+            ```
+            ghcr.io/${{ github.repository }}-api:latest
+            ```
+
+            ### Pull the Image
+            ```bash
+            docker pull ghcr.io/${{ github.repository }}-api:latest
+            ```
+
+            ### Run the Container
+            ```bash
+            docker run -d \
+              -p 5155:8080 \
+              -e ASPNETCORE_ENVIRONMENT=Production \
+              ghcr.io/${{ github.repository }}-api:${{ env.VERSION }}
+            ```
+
+            See the [README.md](https://github.com/${{ github.repository }}/blob/main/README.md) for more details.
+          draft: false
+          prerelease: false
+          generate_release_notes: true 

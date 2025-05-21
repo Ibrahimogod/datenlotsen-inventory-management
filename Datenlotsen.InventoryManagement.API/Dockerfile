@@ -1,23 +1,19 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
+
 COPY ["Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj", "Datenlotsen.InventoryManagement.API/"]
-RUN dotnet restore "Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj"
+COPY ["Datenlotsen.InventoryManagement/Datenlotsen.InventoryManagement.csproj", "Datenlotsen.InventoryManagement/"]
+COPY ["Datenlotsen.InventoryManagement.Data/Datenlotsen.InventoryManagement.Data.csproj", "Datenlotsen.InventoryManagement.Data/"]
+COPY ["Datenlotsen.InventoryManagement.Shared.Data/Datenlotsen.InventoryManagement.Shared.Data.csproj", "Datenlotsen.InventoryManagement.Shared.Data/"]
+RUN dotnet restore "Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj" --runtime linux-musl-x64
+
 COPY . .
-WORKDIR "/src/Datenlotsen.InventoryManagement.API"
-RUN dotnet build "./Datenlotsen.InventoryManagement.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet publish "Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj" -c Release -o /app/publish --runtime linux-musl-x64 /p:UseAppHost=false
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Datenlotsen.InventoryManagement.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+COPY --from=build /app/publish .
+
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "Datenlotsen.InventoryManagement.API.dll"]
