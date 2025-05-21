@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.WPF", "Datenlotsen.InventoryManagement.WPF\Datenlotsen.InventoryManagement.WPF.csproj", "{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.API", "Datenlotsen.InventoryManagement.API\Datenlotsen.InventoryManagement.API.csproj", "{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49EF2B5D-D469-409F-A969-A4689063D90F}"
@@ -15,18 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Tests", "Datenlotsen.InventoryManagement.Tests\Datenlotsen.InventoryManagement.Tests.csproj", "{BD3080E2-269F-4256-8007-49DB9E92158A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.WPF.Tests", "Datenlotsen.InventoryManagement.WPF.Tests\Datenlotsen.InventoryManagement.WPF.Tests.csproj", "{41434552-E718-4C1D-8ECE-A081E940D5A9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97D7DE8F-A43F-4722-87DB-D5101F24B2F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,9 +35,5 @@ Global
 		{BD3080E2-269F-4256-8007-49DB9E92158A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3080E2-269F-4256-8007-49DB9E92158A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3080E2-269F-4256-8007-49DB9E92158A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41434552-E718-4C1D-8ECE-A081E940D5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
