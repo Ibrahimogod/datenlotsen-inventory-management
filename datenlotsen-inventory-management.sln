@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Tests", "Datenlotsen.InventoryManagement.Tests\Datenlotsen.InventoryManagement.Tests.csproj", "{BD3080E2-269F-4256-8007-49DB9E92158A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{760F5800-4EC7-41C6-87C3-3763D8CD982A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Shared.Data", "Datenlotsen.InventoryManagement.Shared.Data\Datenlotsen.InventoryManagement.Shared.Data.csproj", "{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +39,12 @@ Global
 		{BD3080E2-269F-4256-8007-49DB9E92158A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3080E2-269F-4256-8007-49DB9E92158A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD3080E2-269F-4256-8007-49DB9E92158A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7} = {760F5800-4EC7-41C6-87C3-3763D8CD982A}
 	EndGlobalSection
 EndGlobal
