@@ -17,6 +17,8 @@
 **/.idea/**/dynamic.xml
 
 # Rider
+*.DotSettings
+*.DotSettings.user
 # Rider auto-generates .iml files, and contentModel.xml
 **/.idea/**/*.iml
 **/.idea/**/contentModel.xml

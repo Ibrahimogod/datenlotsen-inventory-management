@@ -4,9 +4,9 @@ namespace Datenlotsen.InventoryManagement.Data.Models
 {
     public class InventoryItem : Entity<Guid>
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public decimal StockQuantity { get; set; }
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category Category { get; set; } = null!;
     }
 }
