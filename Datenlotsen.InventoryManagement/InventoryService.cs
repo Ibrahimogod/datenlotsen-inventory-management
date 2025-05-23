@@ -32,17 +32,20 @@ namespace Datenlotsen.InventoryManagement
                 predicate: i => i.Id == id, cancellationToken: cancellationToken);
         }
 
-        public async ValueTask<Guid> CreateAsync(string name, decimal stockQuantity, Guid categoryId, CancellationToken cancellationToken)
+        public async ValueTask<InventoryItemCreatedResult> CreateAsync(string name, decimal stockQuantity, Guid categoryId, CancellationToken cancellationToken)
         {
-            var inventoryItem = new InventoryItem
+            var inventoryItem = await _inventoryItemRepository.AddAsync( new InventoryItem
             {
                 Name = name,
                 StockQuantity = stockQuantity,
                 CategoryId = categoryId
+            }, cancellationToken);
+            return new InventoryItemCreatedResult
+            {
+                Id = inventoryItem.Id,
+                Name = inventoryItem.Name,
+                StockQuantity = inventoryItem.StockQuantity,
             };
-
-            await _inventoryItemRepository.AddAsync(inventoryItem, cancellationToken);
-            return inventoryItem.Id;
         }
 
         public ValueTask UpdateAsync(Guid id, string name, decimal stockQuantity, Guid categoryId, CancellationToken cancellationToken)

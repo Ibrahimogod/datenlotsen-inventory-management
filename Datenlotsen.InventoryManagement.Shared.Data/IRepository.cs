@@ -30,7 +30,7 @@ public interface IRepository<TEntity, in TId>
         bool asNoTracking = true,
         CancellationToken cancellationToken = default);
     
-    ValueTask AddAsync(
+    ValueTask<TEntity> AddAsync(
         TEntity entity,
         CancellationToken cancellationToken = default);
     

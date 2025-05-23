@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.API", "Datenlotsen.InventoryManagement.API\Datenlotsen.InventoryManagement.API.csproj", "{3B06EA15-8E41-4B6C-8B8C-3A6D6AE62BAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49EF2B5D-D469-409F-A969-A4689063D90F}"
@@ -16,6 +19,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{760F5800-4EC7-41C6-87C3-3763D8CD982A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Shared.Data", "Datenlotsen.InventoryManagement.Shared.Data\Datenlotsen.InventoryManagement.Shared.Data.csproj", "{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.WPF", "Datenlotsen.WPF\Datenlotsen.WPF.csproj", "{38983055-EFA7-45F9-86C9-0B51B8216F44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,8 +48,18 @@ Global
 		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7} = {760F5800-4EC7-41C6-87C3-3763D8CD982A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0154A076-45CC-44EE-83CC-0912DA5ACDF9}
 	EndGlobalSection
 EndGlobal
