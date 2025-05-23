@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Datenlotsen.WPF" Language="1033" Version="1.0.0.0" Manufacturer="Datenlotsen" UpgradeCode="460577fd-2ea6-4965-b906-85aa2a898c38">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Datenlotsen.WPF" />
+      </Directory>
+    </Directory>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="MainExecutable" Guid="08afc72f-8416-4d8f-b676-aacdf09640f5">
+        <File Source="..\\Datenlotsen.WPF\\bin\\Release\\net8.0-windows\\Datenlotsen.WPF.exe" />
+      </Component>
+    </DirectoryRef>
+    <Feature Id="ProductFeature" Title="Datenlotsen.WPF" Level="1">
+      <ComponentRef Id="MainExecutable" />
+    </Feature>
+  </Product>
+</Wix>
