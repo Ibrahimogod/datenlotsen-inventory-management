@@ -78,7 +78,3 @@ A `docker-compose.yaml` file is provided to run the API and a PostgreSQL databas
 - All projects target .NET 8.
 - To run tests:dotnet test- To build all projects:dotnet build
 ---
-
-## Notes
-- All references to the repository use `Ibrahimogod/datenlotsen-inventory-management`.
-- For more details, see the individual project folders and workflow YAML files in `.github/workflows/`.

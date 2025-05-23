@@ -2,8 +2,12 @@
 name: Build and Release WPF MSI
 
 on:
-  workflow_dispatch: 
-    
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release tag (e.g., v1.0.0)'
+        required: false
+        type: string
   push:
     tags:
       - 'v*.*.*'
@@ -36,9 +40,25 @@ jobs:
           light.exe publish/Product.wixobj -o publish/Datenlotsen.msi
         shell: cmd
 
+      - name: Set Release Tag
+        id: set_tag
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ -z "${{ github.event.inputs.tag_name }}" ]; then
+              echo "::error::You must provide a tag_name when running manually."
+              exit 1
+            fi
+            echo "::set-output name=tag::${{ github.event.inputs.tag_name }}"
+          else
+            echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
+          fi
+        shell: bash
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: publish/Datenlotsen.msi
+          tag_name: ${{ steps.set_tag.outputs.tag }}
+          overwrite: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
