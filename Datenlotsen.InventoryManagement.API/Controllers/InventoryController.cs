@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Datenlotsen.InventoryManagement.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Datenlotsen.InventoryManagement.API.Controllers
 {
@@ -21,10 +22,12 @@ namespace Datenlotsen.InventoryManagement.API.Controllers
            return Ok(await _inventoryService.SearchAsync(
                name: model?.Name,
                stockStatus: model?.StockStatus,
+               categoryId: model.CategoryId,
                cancellationToken: cancellationToken));
         }
 
         [HttpGet("{id:guid}")]
+        [ActionName(nameof(GetById))]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var item = await _inventoryService.GetByIdAsync(id, cancellationToken);
@@ -35,8 +38,16 @@ namespace Datenlotsen.InventoryManagement.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CreateInventoryItemModel item, CancellationToken cancellationToken)
         {
-            var id = await _inventoryService.CreateAsync(item.Name, item.StockQuantity, item.CategoryId, cancellationToken);
-            return CreatedAtAction(nameof(GetById), new { id });
+            try
+            {
+                var result = await _inventoryService.CreateAsync(item.Name, item.StockQuantity, item.CategoryId,
+                    cancellationToken);
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest(new { error = "please make sure the category exists and name not duplicated." });
+            }
         }
 
         [HttpPut("{id:guid}")]

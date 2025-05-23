@@ -1,0 +1,87 @@
+﻿<Window x:Class="Datenlotsen.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Datenlotsen.WPF"
+        xmlns:viewModels="clr-namespace:Datenlotsen.WPF.ViewModels"
+        xmlns:controls="clr-namespace:Datenlotsen.WPF.Controls"
+        mc:Ignorable="d"
+        Title="Inventory Management" Height="600" Width="1000">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#23272F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#23272F">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="20,20,20,10">
+            <controls:PlaceholderTextBox Width="200" Height="32" Margin="0,0,10,0" VerticalAlignment="Center" 
+                                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Placeholder="Search by name..."/>
+            <ComboBox Width="150" Height="32" Margin="0,0,10,0" VerticalAlignment="Center"
+                      ItemsSource="{Binding Categories}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCategory}" Padding="6,3"/>
+            <ComboBox Width="120" Height="32" Margin="0,0,10,0" VerticalAlignment="Center"
+                      SelectedValuePath="Tag" SelectedValue="{Binding SelectedStockStatus, Mode=TwoWay}" Padding="6,3">
+                <ComboBoxItem Content="All Stock Statuses" Tag="" IsSelected="True"/>
+                <ComboBoxItem Content="Low Stock" Tag="LowStock"/>
+                <ComboBoxItem Content="In Stock" Tag="InStock"/>
+            </ComboBox>
+            <Button Content="Search" Command="{Binding SearchCommand}" Height="32" Width="80" Background="#4F8EF7" Foreground="White"/>
+            <Button Content="Add New" Command="{Binding AddCommand}" Height="32" Width="100" Background="#43B581" Foreground="White"/>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#1E2228" CornerRadius="8" Padding="10" Margin="0,0,10,0">
+                <DataGrid ItemsSource="{Binding InventoryItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
+                          AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
+                          Background="#1E2228" Foreground="White" RowBackground="#23272F" AlternatingRowBackground="#23272F" 
+                          GridLinesVisibility="None" BorderThickness="0" FontSize="15"
+                          ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}" Width="*"/>
+                        <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity}" Width="*"/>
+                        <DataGridTextColumn Header="Last Updated" Binding="{Binding UpdatedAt}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+            <Border Grid.Column="1" Background="#23272F" CornerRadius="8" Padding="20" >
+                <StackPanel>
+                    <TextBlock Text="Item Details" FontSize="20" FontWeight="Bold" Foreground="#4F8EF7" Margin="0,0,0,10"/>
+                    <StackPanel DataContext="{Binding SelectedItem}" IsEnabled="{Binding IsEditing, Mode=OneWay}">
+                        <TextBlock Text="Name" Foreground="White"/>
+                        <controls:PlaceholderTextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Height="28" Placeholder="Enter item name..."/>
+                        <TextBlock Text="Stock Quantity" Foreground="White" Margin="0,10,0,0"/>
+                        <controls:PlaceholderTextBox Text="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Height="28" Placeholder="Enter stock quantity..."/>
+                        <TextBlock Text="Category" Foreground="White" Margin="0,10,0,0"/>
+                        <ComboBox ItemsSource="{Binding DataContext.Categories, RelativeSource={RelativeSource AncestorType=Window}}"
+                                  DisplayMemberPath="Name" SelectedItem="{Binding Category, Mode=TwoWay}" Height="28" Padding="6,3"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="0,10,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                        <Button Content="Save" Command="{Binding DataContext.SaveCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                IsEnabled="{Binding DataContext.IsEditing, RelativeSource={RelativeSource AncestorType=Window}}" Width="80" Background="#4F8EF7" Foreground="White"/>
+                        <Button Content="Edit" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                IsEnabled="{Binding DataContext.SelectedItem, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource NullToBoolConverter}}" Width="80" Background="#F7B84F" Foreground="White"/>
+                        <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                IsEnabled="{Binding DataContext.SelectedItem, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource NullToBoolConverter}}" Width="80" Background="#F74F4F" Foreground="White"/>
+                        <Button Content="Cancel" Command="{Binding DataContext.CancelEditCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                IsEnabled="{Binding DataContext.IsEditing, RelativeSource={RelativeSource AncestorType=Window}}" Width="80"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

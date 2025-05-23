@@ -1,0 +1,21 @@
+<UserControl x:Class="Datenlotsen.WPF.Controls.PlaceholderTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="32" d:DesignWidth="200">
+    <Grid>
+        <TextBox
+            Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Padding="8,0,0,0"
+            VerticalContentAlignment="Center"/>
+        <TextBlock
+            Text="{Binding Placeholder, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            Foreground="#888"
+            Margin="8,0,0,0"
+            VerticalAlignment="Center"
+            IsHitTestVisible="False"
+            Visibility="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"/>
+    </Grid>
+</UserControl>

@@ -114,12 +114,13 @@ public class Repository<TDbContext,TEntity,TId> : IRepository<TEntity, TId>
             .SingleOrDefaultAsync(cancellationToken);
     }
 
-    public virtual async ValueTask AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public virtual async ValueTask<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await Set.AddAsync(entity, cancellationToken);
+        var entry = await Set.AddAsync(entity, cancellationToken);
         entity.CreatedAt = DateTime.UtcNow;
         entity.UpdatedAt = DateTime.UtcNow;
         await Context.SaveChangesAsync(cancellationToken);
+        return entry.Entity;
     }
 
     public virtual async ValueTask UpdateAsync(

@@ -24,5 +24,7 @@ public class InventoryItemEntityTypeConfiguration : IEntityTypeConfiguration<Inv
         builder
             .HasIndex(i => i.Name)
             .IsUnique();
+        builder.Navigation(i => i.Category)
+            .AutoInclude();
     }
 }

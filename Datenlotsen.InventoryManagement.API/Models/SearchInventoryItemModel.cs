@@ -10,4 +10,6 @@ public record SearchInventoryItemModel
     public string? Name { get; set; }
     [FromQuery]
     public StockStatus? StockStatus { get; set; }
+    [FromQuery]
+    public Guid? CategoryId { get; set; }
 }

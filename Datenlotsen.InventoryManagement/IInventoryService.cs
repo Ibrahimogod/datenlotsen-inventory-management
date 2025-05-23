@@ -6,9 +6,9 @@ namespace Datenlotsen.InventoryManagement
     public interface IInventoryService
     {
         ValueTask<InventoryItemModel?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        ValueTask<Guid> CreateAsync(string name, decimal stockQuantity, Guid categoryId, CancellationToken cancellationToken);
+        ValueTask<InventoryItemCreatedResult> CreateAsync(string name, decimal stockQuantity, Guid categoryId, CancellationToken cancellationToken);
         ValueTask UpdateAsync(Guid id, string name, decimal stockQuantity, Guid categoryId, CancellationToken cancellationToken);
-        ValueTask<List<InventoryItemModel>> SearchAsync(CancellationToken cancellationToken, string? name = null, StockStatus? stockStatus = null);
+        ValueTask<List<InventoryItemModel>> SearchAsync(CancellationToken cancellationToken, string? name = null, StockStatus? stockStatus = null, Guid? categoryId = null);
         ValueTask DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }
