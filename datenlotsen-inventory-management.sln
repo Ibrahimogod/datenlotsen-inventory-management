@@ -22,6 +22,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.WPF", "Datenlotsen.WPF\Datenlotsen.WPF.csproj", "{38983055-EFA7-45F9-86C9-0B51B8216F44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.WPF.Tests", "Datenlotsen.WPF.Tests\Datenlotsen.WPF.Tests.csproj", "{F865D003-07B6-4D9B-8D92-599DD8A8BAF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.API.Tests", "Datenlotsen.InventoryManagement.API.Tests\Datenlotsen.InventoryManagement.API.Tests.csproj", "{1F105E5B-3B2F-4B26-B57C-312AEB62D38E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Shared.Tests", "Datenlotsen.InventoryManagement.Shared.Tests\Datenlotsen.InventoryManagement.Shared.Tests.csproj", "{0AB5FBC6-3A52-4E45-8DF9-8FB2AE6F0A29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datenlotsen.InventoryManagement.Data.Tests", "Datenlotsen.InventoryManagement.Data.Tests\Datenlotsen.InventoryManagement.Data.Tests.csproj", "{A94CC95A-7F4C-4451-88FC-1C0C57BF6C8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3617E9BD-B594-45EF-B145-B2ABAD03AAF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,12 +62,33 @@ Global
 		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38983055-EFA7-45F9-86C9-0B51B8216F44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F865D003-07B6-4D9B-8D92-599DD8A8BAF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F865D003-07B6-4D9B-8D92-599DD8A8BAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F865D003-07B6-4D9B-8D92-599DD8A8BAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F865D003-07B6-4D9B-8D92-599DD8A8BAF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F105E5B-3B2F-4B26-B57C-312AEB62D38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F105E5B-3B2F-4B26-B57C-312AEB62D38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F105E5B-3B2F-4B26-B57C-312AEB62D38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F105E5B-3B2F-4B26-B57C-312AEB62D38E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB5FBC6-3A52-4E45-8DF9-8FB2AE6F0A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB5FBC6-3A52-4E45-8DF9-8FB2AE6F0A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB5FBC6-3A52-4E45-8DF9-8FB2AE6F0A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB5FBC6-3A52-4E45-8DF9-8FB2AE6F0A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A94CC95A-7F4C-4451-88FC-1C0C57BF6C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A94CC95A-7F4C-4451-88FC-1C0C57BF6C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A94CC95A-7F4C-4451-88FC-1C0C57BF6C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A94CC95A-7F4C-4451-88FC-1C0C57BF6C8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E425CCB3-6FA8-4956-A57C-BE2D880D2AB7} = {760F5800-4EC7-41C6-87C3-3763D8CD982A}
+		{0AB5FBC6-3A52-4E45-8DF9-8FB2AE6F0A29} = {760F5800-4EC7-41C6-87C3-3763D8CD982A}
+		{1F105E5B-3B2F-4B26-B57C-312AEB62D38E} = {3617E9BD-B594-45EF-B145-B2ABAD03AAF9}
+		{A94CC95A-7F4C-4451-88FC-1C0C57BF6C8C} = {3617E9BD-B594-45EF-B145-B2ABAD03AAF9}
+		{BD3080E2-269F-4256-8007-49DB9E92158A} = {3617E9BD-B594-45EF-B145-B2ABAD03AAF9}
+		{F865D003-07B6-4D9B-8D92-599DD8A8BAF5} = {3617E9BD-B594-45EF-B145-B2ABAD03AAF9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0154A076-45CC-44EE-83CC-0912DA5ACDF9}
