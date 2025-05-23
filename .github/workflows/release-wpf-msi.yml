@@ -32,7 +32,7 @@ jobs:
 
       - name: Create MSI installer
         run: |
-          candle.exe installer/Product.wxs -o publish/Product.wixobj
+          candle.exe Datenlotsen.WPF/installer/Product.wxs -o publish/Product.wixobj
           light.exe publish/Product.wixobj -o publish/Datenlotsen.msi
         shell: cmd
 
