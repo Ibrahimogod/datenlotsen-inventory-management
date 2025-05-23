@@ -1,0 +1,43 @@
+# This workflow builds the WPF app, creates an MSI installer using WiX Toolset, and publishes a GitHub release
+name: Build and Release WPF MSI
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Datenlotsen.WPF/Datenlotsen.WPF.csproj
+
+      - name: Publish WPF app
+        run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -r win-x64 --self-contained true -o publish
+
+      - name: Download WiX Toolset
+        run: |
+          choco install wix --version=3.11.2 -y
+        shell: powershell
+
+      - name: Create MSI installer
+        run: |
+          candle.exe installer/Product.wxs -o publish/Product.wixobj
+          light.exe publish/Product.wixobj -o publish/Datenlotsen.msi
+        shell: cmd
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: publish/Datenlotsen.msi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
