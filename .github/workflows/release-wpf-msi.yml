@@ -24,7 +24,7 @@ jobs:
         run: dotnet restore Datenlotsen.WPF/Datenlotsen.WPF.csproj
 
       - name: Publish WPF app
-        run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -r win-x64 --self-contained true -o publish
+        run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -f net8.0-windows
 
       - name: Download WiX Toolset
         run: choco install wixtoolset -y
@@ -32,7 +32,7 @@ jobs:
 
       - name: Create MSI installer
         run: |
-          candle.exe installer/Product.wxs -o publish/Product.wixobj
+          candle.exe Datenlotsen.WPF/installer/Product.wxs -o publish/Product.wixobj
           light.exe publish/Product.wixobj -o publish/Datenlotsen.msi
         shell: cmd
 
