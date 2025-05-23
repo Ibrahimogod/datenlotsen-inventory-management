@@ -2,6 +2,8 @@
 name: Build and Release WPF MSI
 
 on:
+  workflow_dispatch: 
+    
   push:
     tags:
       - 'v*.*.*'
@@ -25,7 +27,7 @@ jobs:
         run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -r win-x64 --self-contained true -o publish
 
       - name: Download WiX Toolset
-        run: choco install wix -y
+        run: choco install wixtoolset -y
         shell: powershell
 
       - name: Create MSI installer
