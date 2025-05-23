@@ -1,7 +1,0 @@
-﻿services:
-  datenlotsen.inventorymanagement.api:
-    image: datenlotsen.inventorymanagement.api
-    build:
-      context: .
-      dockerfile: Datenlotsen.InventoryManagement.API/Dockerfile
-
