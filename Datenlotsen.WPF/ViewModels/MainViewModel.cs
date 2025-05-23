@@ -31,7 +31,7 @@ namespace Datenlotsen.WPF.ViewModels
 
     public class MainViewModel : INotifyPropertyChanged
     {
-        private readonly InventoryApiService _apiService;
+        private readonly IInventoryApiService _apiService;
         private InventoryItemModel? _selectedItem;
         private string? _searchText;
         private StockStatus? _selectedStockStatus;

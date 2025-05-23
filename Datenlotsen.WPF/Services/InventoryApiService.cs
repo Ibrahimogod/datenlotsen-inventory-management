@@ -4,7 +4,7 @@ using Datenlotsen.WPF.ViewModels;
 
 namespace Datenlotsen.WPF.Services
 {
-    public class InventoryApiService
+    public class InventoryApiService : IInventoryApiService
     {
         private readonly HttpClient _httpClient;
         public InventoryApiService()
