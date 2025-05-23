@@ -11,7 +11,7 @@
     </Directory>
     <DirectoryRef Id="INSTALLFOLDER">
       <Component Id="MainExecutable" Guid="08afc72f-8416-4d8f-b676-aacdf09640f5">
-        <File Source="..\\Datenlotsen.WPF\\bin\\Release\\net8.0-windows\\Datenlotsen.WPF.exe" />
+        <File Source="..\\Datenlotsen.WPF\\bin\\Release\\net8.0-windows\\publish\\Datenlotsen.WPF.exe" />
       </Component>
     </DirectoryRef>
     <Feature Id="ProductFeature" Title="Datenlotsen.WPF" Level="1">
