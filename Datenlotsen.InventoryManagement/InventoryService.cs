@@ -58,7 +58,7 @@ namespace Datenlotsen.InventoryManagement
             }, cancellationToken);
         }
 
-        public ValueTask<List<InventoryItemModel>> SearchAsync(CancellationToken cancellationToken, string? name = null, StockStatus? stockStatus = null)
+        public ValueTask<List<InventoryItemModel>> SearchAsync(CancellationToken cancellationToken, string? name = null, StockStatus? stockStatus = null, Guid? categoryId = null)
         {
             return _inventoryItemRepository.GetAllAsync(
                 selector: i => new InventoryItemModel
@@ -74,9 +74,10 @@ namespace Datenlotsen.InventoryManagement
                     CreatedAt = i.CreatedAt,
                     UpdatedAt = i.UpdatedAt
                 },
-                predicate: i => (string.IsNullOrEmpty(name) || i.Name.Contains(name)) &&
+                predicate: i => (string.IsNullOrEmpty(name) || i.Name.ToLower().Contains(name.ToLower())) &&
                                (!stockStatus.HasValue || (stockStatus == StockStatus.LowStock && i.StockQuantity < 5) ||
-                                (stockStatus == StockStatus.InStock && i.StockQuantity >= 5)),
+                                (stockStatus == StockStatus.InStock && i.StockQuantity >= 5)) &&
+                                (!categoryId.HasValue || i.CategoryId == categoryId.Value),
                 cancellationToken: cancellationToken);
         }
 

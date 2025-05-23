@@ -22,6 +22,7 @@ namespace Datenlotsen.InventoryManagement.API.Controllers
            return Ok(await _inventoryService.SearchAsync(
                name: model?.Name,
                stockStatus: model?.StockStatus,
+               categoryId: model.CategoryId,
                cancellationToken: cancellationToken));
         }
 
