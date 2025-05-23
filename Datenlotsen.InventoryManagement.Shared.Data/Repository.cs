@@ -42,7 +42,7 @@ public class Repository<TDbContext,TEntity,TId> : IRepository<TEntity, TId>
                 _ => throw new NotSupportedException(),
             };
 
-            for (int i = 0; i < sortings.Count; i++)
+            for (int i = 1; i < sortings.Count; i++)
             {
                 var item = sortings[i];
                 orderedQuery = item.SortingDirection switch

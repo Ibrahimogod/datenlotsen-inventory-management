@@ -21,8 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Datenlotsen.InventoryManagement.API\Datenlotsen.InventoryManagement.API.csproj" />
       <ProjectReference Include="..\Datenlotsen.InventoryManagement.Shared.Tests\Datenlotsen.InventoryManagement.Shared.Tests.csproj" />
-      <ProjectReference Include="..\Datenlotsen.InventoryManagement\Datenlotsen.InventoryManagement.csproj" />
     </ItemGroup>
 
 </Project>

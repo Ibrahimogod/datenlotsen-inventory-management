@@ -1,0 +1,31 @@
+﻿version: '3.9'
+
+services:
+  api:
+    container_name: datenlotsen-inventory-api
+    build:
+      context: .
+      dockerfile: Datenlotsen.InventoryManagement.API/Dockerfile
+    ports:
+      - "5155:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__InventoryManagementDb=Server=postgres;Port=5432;Database=datenlotsen-inventory-management;User Id=postgres;Password=123456
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: datenlotsen-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432"
+
+volumes:
+  postgres_data:
