@@ -6,7 +6,20 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
+    <ApplicationIcon>inventory-management.ico</ApplicationIcon>
+    <PackageIcon>inventory-management.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="inventory-management.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Downloads\inventory-management.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
