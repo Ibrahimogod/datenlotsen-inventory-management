@@ -73,6 +73,7 @@ jobs:
             echo "tag=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
           else
             echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
         shell: bash
 
       - name: Create GitHub Release
