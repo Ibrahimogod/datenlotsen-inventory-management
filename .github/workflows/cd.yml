@@ -115,10 +115,8 @@ jobs:
             git config --global user.name 'GitHub Actions'
             git config --global user.email 'github-actions@github.com'
             git tag -a "v${{ env.VERSION }}" -m "Release v${{ env.VERSION }}"
-            git push origin "v${{ env.VERSION }}"
+            git push https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/${{ github.repository }}.git "v${{ env.VERSION }}"
           fi
-        env:
-           GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
