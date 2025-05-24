@@ -2,8 +2,6 @@ name: Release WPF App and Docker Image
 
 on:
   push:
-    branches:
-      - main
     tags:
       - '*.*.*'
   workflow_dispatch:
@@ -16,7 +14,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}-api
-  VERSION: ${{ github.event.inputs.version || (github.ref_type == 'tag' && github.ref_name) || (github.ref == 'refs/heads/main' && 'latest') || github.sha }}
+  VERSION: ${{ github.event.inputs.version || (github.ref_type == 'tag' && github.ref_name) || github.sha }}
 
 jobs:
   build-wpf:

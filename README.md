@@ -39,16 +39,16 @@ Automated GitHub Actions workflows are used for building, testing, and publishin
 4. Run `Datenlotsen.WPF.exe` from the extracted files.
 
 ### Run from Source
-1. Restore dependencies:dotnet restore Datenlotsen.WPF/Datenlotsen.WPF.csproj2. Build and run:dotnet run --project Datenlotsen.WPF/Datenlotsen.WPF.csproj
+1. Restore dependencies:dotnet restore Datenlotsen.WPF/Datenlotsen.WPF.csproj. Build and run:dotnet run --project Datenlotsen.WPF/Datenlotsen.WPF.csproj
 ---
 
 ## API Service
 
 ### Run Locally (without Docker)
-1. Restore dependencies:dotnet restore Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj2. Build and run:dotnet run --project Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj   The API will be available at `http://localhost:5155` by default. You may need to configure your connection string for PostgreSQL in your user secrets or environment variables.
+1. Restore dependencies:dotnet restore Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj. Build and run:dotnet run --project Datenlotsen.InventoryManagement.API/Datenlotsen.InventoryManagement.API.csproj   The API will be available at `http://localhost:5155` by default. You may need to configure your connection string for PostgreSQL in your user secrets or environment variables.
 
 ### Run with Docker
-1. Pull the latest image from GHCR:docker pull ghcr.io/ibrahimogod/datenlotsen-inventory-management-api:latest2. Run the container:docker run -d -p 5155:8080 -e ASPNETCORE_ENVIRONMENT=Production ghcr.io/ibrahimogod/datenlotsen-inventory-management-api:latest> The Docker image is built and published by the `docker-publish.yml` workflow on pushes to `main` and on versioned releases.
+1. Pull the latest image from GHCR:docker pull ghcr.io/ibrahimogod/datenlotsen-inventory-management-api:latest. Run the container:docker run -d -p 5155:8080 -e ASPNETCORE_ENVIRONMENT=Production ghcr.io/ibrahimogod/datenlotsen-inventory-management-api:latest The Docker image is built and published by the `cd.yml` workflow on pushes to `main` with every new version tag (e.g., `v1.0.0`).
 
 ---
 
@@ -68,9 +68,8 @@ A `docker-compose.yaml` file is provided to run the API and a PostgreSQL databas
 
 ## Automated Workflows
 
-- **Build and Test**: On every push/PR to `main`, all projects are built and tested (`build-and-test.yml`).
-- **API Docker Publish**: On push to `main` or manual versioned release, builds and pushes the API Docker image to GHCR, and creates a release (`docker-publish.yml`).
-- **WPF App Release**: On every new version tag (e.g., `v1.0.0`) or manual dispatch, builds the WPF app and publishes a ZIP file as a GitHub Release (`release-wpf-app.yml`).
+- **Build and Test**: On every push/PR to `main`, all projects are built and tested (`ci.yml`).
+- **API Docker and WPF App Release**: On every new version tag (e.g., `v1.0.0`) or manual dispatch, builds the WPF app and publishes a ZIP file and Docker Image as a GitHub Release (`cd.yml`).
 
 ---
 
