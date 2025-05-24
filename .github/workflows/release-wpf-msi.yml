@@ -59,6 +59,4 @@ jobs:
         with:
           files: publish/Datenlotsen.msi
           tag_name: ${{ steps.set_tag.outputs.tag }}
-          overwrite: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
