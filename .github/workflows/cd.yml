@@ -107,11 +107,6 @@ jobs:
     runs-on: windows-latest
     needs: [build-wpf, build-docker]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Download published app artifact
         uses: actions/download-artifact@v4
         with:
@@ -125,22 +120,6 @@ jobs:
       - name: Create ZIP of published app
         run: Compress-Archive -Path ./release/* -DestinationPath ${{ github.workspace }}/Datenlotsen.zip
         shell: pwsh
-         
-      - name: Determine VERSION
-        id: get_version
-        shell: bash
-        run: |
-          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            VERSION="${GITHUB_REF_NAME}"
-          else
-            VERSION=$(git fetch --tags && git describe --tags `git rev-list --tags --max-count=1`)
-          fi
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-      - name: Fetch and checkout release tag
-        run: |
-          git fetch --tags
-          git checkout tags/${{ needs.prepare.outputs.version }}
       
       - name: List workspace contents
         run: |
@@ -164,7 +143,7 @@ jobs:
             ```
             ### Pull the Image
             ```bash
-            docker pull ghcr.io/${{ github.repository }}-api:latest
+            docker pull ghcr.io/${{ github.repository }}-api:${{ needs.prepare.outputs.version }}
             ```
             ### Run the Container
             ```bash
