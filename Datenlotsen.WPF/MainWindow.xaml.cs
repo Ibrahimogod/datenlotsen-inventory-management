@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using Datenlotsen.WPF.ViewModels;
 
 namespace Datenlotsen.WPF
 {
@@ -11,7 +10,6 @@ namespace Datenlotsen.WPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }

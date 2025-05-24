@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:Datenlotsen.WPF.ViewModels"
         xmlns:controls="clr-namespace:Datenlotsen.WPF.Controls"
         mc:Ignorable="d"
-        Title="Inventory Management" Height="600" Width="1000">
+        Title="Inventory Management" Height="600" Width="1200">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
