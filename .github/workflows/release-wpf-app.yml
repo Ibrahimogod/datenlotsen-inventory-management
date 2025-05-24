@@ -1,4 +1,4 @@
-# This workflow builds the WPF app and publishes a GitHub release with the published output (no MSI installer)
+# This workflow builds the WPF app and publishes a GitHub release with the published output
 name: Build and Release WPF App
 
 on:
@@ -82,4 +82,4 @@ jobs:
           files: ./release/**
           tag_name: ${{ steps.set_tag.outputs.tag }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
