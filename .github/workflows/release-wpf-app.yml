@@ -15,6 +15,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    outputs:
+      artifact-name: ${{ steps.set_artifact_name.outputs.name }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,13 +30,22 @@ jobs:
         run: dotnet restore Datenlotsen.WPF/Datenlotsen.WPF.csproj
 
       - name: Publish WPF app
-        run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -f net8.0-windows
+        run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -f net8.0-windows -o publish
+
+      - name: List publish directory (debug)
+        run: |
+          echo "Contents of publish directory:"
+          dir publish
+
+      - name: Set artifact name
+        id: set_artifact_name
+        run: echo "name=Datenlotsen" >> $GITHUB_OUTPUT
 
       - name: Upload published app artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DatenlotsenWpfApp
-          path: publish
+          name: Datenlotsen
+          path: publish/**
 
   release:
     runs-on: windows-latest
@@ -43,8 +54,13 @@ jobs:
       - name: Download published app artifact
         uses: actions/download-artifact@v4
         with:
-          name: DatenlotsenWpfApp
+          name: Datenlotsen
           path: ./release
+
+      - name: List release directory (debug)
+        run: |
+          echo "Contents of release directory:"
+          dir ./release
 
       - name: Set Release Tag
         id: set_tag
@@ -64,4 +80,5 @@ jobs:
         with:
           files: ./release/**
           tag_name: ${{ steps.set_tag.outputs.tag }}
-          token: ${{ secrets.GH_PAT }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
