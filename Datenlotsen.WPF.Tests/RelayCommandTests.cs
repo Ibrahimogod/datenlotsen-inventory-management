@@ -1,7 +1,4 @@
-using System;
-using System.Windows.Input;
 using Datenlotsen.WPF.Commands;
-using Xunit;
 
 namespace Datenlotsen.WPF.Tests;
 
