@@ -121,7 +121,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./Datenlotsen.zip
+          files: ${{ github.workspace }}/Datenlotsen.zip
           tag_name: v${{ env.VERSION }}
           name: Release v${{ env.VERSION }}
           body: |
@@ -130,15 +130,15 @@ jobs:
 
             ## Docker Image
             The latest Docker image is available at:
-            ```
+            ```bash
             ghcr.io/${{ github.repository }}-api:latest
             ```
             ### Pull the Image
-            ```
+            ```bash
             docker pull ghcr.io/${{ github.repository }}-api:latest
             ```
             ### Run the Container
-            ```
+            ```bash
             docker run -d \
               -p 5155:8080 \
               -e ASPNETCORE_ENVIRONMENT=Production \
