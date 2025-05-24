@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using Datenlotsen.WPF.ViewModels;
 
 namespace Datenlotsen.WPF
 {
