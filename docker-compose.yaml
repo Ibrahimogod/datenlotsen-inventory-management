@@ -19,7 +19,7 @@ services:
     working_dir: /src
     volumes:
       - ./:/src
-    entrypoint: ["sh", "-c", "cd Datenlotsen.InventoryManagement.Data && dotnet new tool-manifest --force && dotnet tool install dotnet-ef && dotnet ef database update -- 'Server=postgres;Port=5432;Database=datenlotsen-inventory-management;User Id=postgres;Password=123456;'"]
+    entrypoint: ["sh", "-c", "cd Datenlotsen.InventoryManagement.Data && dotnet new tool-manifest --force && dotnet tool install dotnet-ef && dotnet ef database update -- 'Server=postgres;Port=5432;Database=datenlotsen-inventory-management;User Id=postgres;Password=123456;' && rm -rf .config/dotnet-tools.json"]
 
   postgres:
     image: postgres:16
