@@ -4,17 +4,11 @@ on:
   push:
     tags:
       - '*.*.*'
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Release version (e.g., 1.0.0)'
-        required: true
-        type: string
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}-api
-  VERSION: ${{ github.event.inputs.version || (github.ref_type == 'tag' && github.ref_name) || github.sha }}
+  VERSION: ${{ (github.ref_type == 'tag' && github.ref_name) || github.sha }}
 
 jobs:
   build-wpf:
@@ -97,6 +91,10 @@ jobs:
           name: Datenlotsen
           path: ./release
 
+      - name: List release contents
+        run: ls -l ./release
+        shell: pwsh
+
       - name: Create ZIP of published app
         run: Compress-Archive -Path ./release/* -DestinationPath ${{ github.workspace }}/Datenlotsen.zip
         shell: pwsh
@@ -106,19 +104,11 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
-
-      - name: Create tag if not exists
-        shell: bash
+      
+      - name: List workspace contents
         run: |
-            if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
-                echo "Tag v${{ env.VERSION }} already exists."
-            else
-                git config --global user.name 'GitHub Actions'
-                git config --global user.email 'github-actions@github.com'
-                git tag "v${{ env.VERSION }}"
-                git push origin "v${{ env.VERSION }}"
-                echo "Tag v${{ env.VERSION }} created and pushed."
-            fi
+          ls ${{ github.workspace }}
+        shell: pwsh
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
