@@ -98,8 +98,8 @@ jobs:
           path: ./release
 
       - name: Create ZIP of published app
-        run: |
-          powershell Compress-Archive -Path ./release/* -DestinationPath ./Datenlotsen.zip
+        run: Compress-Archive -Path ./release/* -DestinationPath ${{ github.workspace }}/Datenlotsen.zip
+        shell: pwsh
           
       - name: Checkout repository
         uses: actions/checkout@v4
