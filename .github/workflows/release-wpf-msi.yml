@@ -1,5 +1,5 @@
-# This workflow builds the WPF app, creates an MSI installer using WiX Toolset, and publishes a GitHub release
-name: Build and Release WPF MSI
+# This workflow builds the WPF app and publishes a GitHub release with the published output (no MSI installer)
+name: Build and Release WPF App
 
 on:
   workflow_dispatch:
@@ -30,15 +30,21 @@ jobs:
       - name: Publish WPF app
         run: dotnet publish Datenlotsen.WPF/Datenlotsen.WPF.csproj -c Release -f net8.0-windows
 
-      - name: Download WiX Toolset
-        run: choco install wixtoolset -y
-        shell: powershell
+      - name: Upload published app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DatenlotsenWpfApp
+          path: publish
 
-      - name: Create MSI installer
-        run: |
-          candle.exe Datenlotsen.WPF/installer/Product.wxs -o publish/Product.wixobj
-          light.exe publish/Product.wixobj -o publish/Datenlotsen.msi
-        shell: cmd
+  release:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: Download published app artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: DatenlotsenWpfApp
+          path: ./release
 
       - name: Set Release Tag
         id: set_tag
@@ -48,15 +54,14 @@ jobs:
               echo "::error::You must provide a tag_name when running manually."
               exit 1
             fi
-            echo "::set-output name=tag::${{ github.event.inputs.tag_name }}"
+            echo "tag=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=tag::${GITHUB_REF#refs/tags/}"
-          fi
+            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: publish/Datenlotsen.msi
+          files: ./release/**
           tag_name: ${{ steps.set_tag.outputs.tag }}
           token: ${{ secrets.GH_PAT }}
