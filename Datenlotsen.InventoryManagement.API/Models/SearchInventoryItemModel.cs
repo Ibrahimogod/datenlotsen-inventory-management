@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Datenlotsen.InventoryManagement.Enums;
+﻿using Datenlotsen.InventoryManagement.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Datenlotsen.InventoryManagement.API.Models;

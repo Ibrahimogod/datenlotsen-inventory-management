@@ -1,10 +1,4 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Moq;
-using Xunit;
 using Datenlotsen.WPF.ViewModels;
 using Datenlotsen.WPF.Services;
 
@@ -13,122 +7,122 @@ namespace Datenlotsen.WPF.Tests;
 public class MainViewModelTests
 {
     private readonly Mock<IInventoryApiService> _apiServiceMock;
-    private readonly MainViewModelForTest _vm;
+    private readonly MainViewModelForTest _viewModel;
 
     public MainViewModelTests()
     {
         _apiServiceMock = new Mock<IInventoryApiService>();
-        _vm = new MainViewModelForTest(_apiServiceMock.Object);
+        _viewModel = new MainViewModelForTest(_apiServiceMock.Object);
     }
 
     [Fact]
     public async Task LoadCategoriesAsync_PopulatesCategories()
     {
         _apiServiceMock.Setup(s => s.GetCategoriesAsync(default)).ReturnsAsync(new[] { new CategoryModel { Id = Guid.NewGuid(), Name = "cat" } }.ToList());
-        await _vm.InvokeLoadCategoriesAsync();
-        Assert.Contains(_vm.Categories, c => c.Name == "cat");
+        await _viewModel.InvokeLoadCategoriesAsync();
+        Assert.Contains(_viewModel.Categories, c => c.Name == "cat");
     }
 
     [Fact]
     public async Task LoadInventoryAsync_PopulatesInventoryItems()
     {
         var cat = new CategoryModel { Id = Guid.NewGuid(), Name = "cat" };
-        _vm.Categories.Add(cat);
-        _vm.SelectedCategory = cat;
+        _viewModel.Categories.Add(cat);
+        _viewModel.SelectedCategory = cat;
         _apiServiceMock.Setup(s => s.GetInventoryItemsAsync(null, null, cat.Id, default)).ReturnsAsync(new[] { new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat } }.ToList());
-        await _vm.InvokeLoadInventoryAsync();
-        Assert.Contains(_vm.InventoryItems, i => i.Name == "item");
+        await _viewModel.InvokeLoadInventoryAsync();
+        Assert.Contains(_viewModel.InventoryItems, i => i.Name == "item");
     }
 
     [Fact]
     public void StartAdd_SetsIsEditingAndSelectedItem()
     {
-        _vm.Categories.Add(new CategoryModel { Id = Guid.NewGuid(), Name = "cat" });
-        _vm.InvokeStartAdd();
-        Assert.True(_vm.IsEditing);
-        Assert.NotNull(_vm.SelectedItem);
+        _viewModel.Categories.Add(new CategoryModel { Id = Guid.NewGuid(), Name = "cat" });
+        _viewModel.InvokeStartAdd();
+        Assert.True(_viewModel.IsEditing);
+        Assert.NotNull(_viewModel.SelectedItem);
     }
 
     [Fact]
     public void StartEdit_ClonesSelectedItem()
     {
         var cat = new CategoryModel { Id = Guid.NewGuid(), Name = "cat" };
-        _vm.Categories.Add(cat);
-        _vm.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat };
-        _vm.InvokeStartEdit();
-        Assert.True(_vm.IsEditing);
-        Assert.NotNull(_vm.SelectedItem);
-        Assert.Equal("item", _vm.SelectedItem.Name);
+        _viewModel.Categories.Add(cat);
+        _viewModel.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat };
+        _viewModel.InvokeStartEdit();
+        Assert.True(_viewModel.IsEditing);
+        Assert.NotNull(_viewModel.SelectedItem);
+        Assert.Equal("item", _viewModel.SelectedItem.Name);
     }
 
     [Fact]
     public async Task SaveAsync_CreatesOrUpdatesItem()
     {
         var cat = new CategoryModel { Id = Guid.NewGuid(), Name = "cat" };
-        _vm.Categories.Add(cat);
-        _vm.SelectedItem = new InventoryItemModel { Id = Guid.Empty, Name = "item", StockQuantity = 1, Category = cat };
+        _viewModel.Categories.Add(cat);
+        _viewModel.SelectedItem = new InventoryItemModel { Id = Guid.Empty, Name = "item", StockQuantity = 1, Category = cat };
         _apiServiceMock.Setup(s => s.CreateInventoryItemAsync("item", 1, cat.Id, default)).ReturnsAsync(Guid.NewGuid());
-        await _vm.InvokeSaveAsync();
-        Assert.False(_vm.IsEditing);
-        _vm.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item2", StockQuantity = 2, Category = cat };
+        await _viewModel.InvokeSaveAsync();
+        Assert.False(_viewModel.IsEditing);
+        _viewModel.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item2", StockQuantity = 2, Category = cat };
         _apiServiceMock.Setup(s => s.UpdateInventoryItemAsync(It.IsAny<Guid>(), "item2", 2, cat.Id, default)).ReturnsAsync(true);
-        await _vm.InvokeSaveAsync();
-        Assert.False(_vm.IsEditing);
+        await _viewModel.InvokeSaveAsync();
+        Assert.False(_viewModel.IsEditing);
     }
 
     [Fact]
     public async Task SaveAsync_SetsErrorMessage_OnException()
     {
         var cat = new CategoryModel { Id = Guid.NewGuid(), Name = "cat" };
-        _vm.Categories.Add(cat);
-        _vm.SelectedItem = new InventoryItemModel { Id = Guid.Empty, Name = "item", StockQuantity = 1, Category = cat };
+        _viewModel.Categories.Add(cat);
+        _viewModel.SelectedItem = new InventoryItemModel { Id = Guid.Empty, Name = "item", StockQuantity = 1, Category = cat };
         _apiServiceMock.Setup(s => s.CreateInventoryItemAsync("item", 1, cat.Id, default)).ThrowsAsync(new Exception("fail"));
-        await _vm.InvokeSaveAsync();
-        Assert.Equal("fail", _vm.ErrorMessage);
+        await _viewModel.InvokeSaveAsync();
+        Assert.Equal("fail", _viewModel.ErrorMessage);
     }
 
     [Fact]
     public async Task DeleteAsync_DeletesItem()
     {
         var cat = new CategoryModel { Id = Guid.NewGuid(), Name = "cat" };
-        _vm.Categories.Add(cat);
-        _vm.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat };
-        _apiServiceMock.Setup(s => s.DeleteInventoryItemAsync(_vm.SelectedItem.Id, CancellationToken.None)).ReturnsAsync(true);
+        _viewModel.Categories.Add(cat);
+        _viewModel.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat };
+        _apiServiceMock.Setup(s => s.DeleteInventoryItemAsync(_viewModel.SelectedItem.Id, CancellationToken.None)).ReturnsAsync(true);
         // Mock inventory load to avoid null reference
         _apiServiceMock.Setup(s => s.GetInventoryItemsAsync(It.IsAny<string>(), It.IsAny<StockStatus?>(), It.IsAny<Guid?>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<InventoryItemModel>());
-        await _vm.InvokeDeleteAsync();
-        Assert.Null(_vm.ErrorMessage);
+        await _viewModel.InvokeDeleteAsync();
+        Assert.Null(_viewModel.ErrorMessage);
     }
 
     [Fact]
     public async Task DeleteAsync_SetsErrorMessage_OnException()
     {
         var cat = new CategoryModel { Id = Guid.NewGuid(), Name = "cat" };
-        _vm.Categories.Add(cat);
-        _vm.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat };
-        _apiServiceMock.Setup(s => s.DeleteInventoryItemAsync(_vm.SelectedItem.Id, default)).ThrowsAsync(new Exception("fail"));
-        await _vm.InvokeDeleteAsync();
-        Assert.Equal("fail", _vm.ErrorMessage);
+        _viewModel.Categories.Add(cat);
+        _viewModel.SelectedItem = new InventoryItemModel { Id = Guid.NewGuid(), Name = "item", Category = cat };
+        _apiServiceMock.Setup(s => s.DeleteInventoryItemAsync(_viewModel.SelectedItem.Id, default)).ThrowsAsync(new Exception("fail"));
+        await _viewModel.InvokeDeleteAsync();
+        Assert.Equal("fail", _viewModel.ErrorMessage);
     }
 
     [Fact]
     public void CancelEdit_ResetsIsEditingAndErrorMessage()
     {
-        _vm.IsEditing = true;
-        _vm.ErrorMessage = "err";
-        _vm.InvokeCancelEdit();
-        Assert.False(_vm.IsEditing);
-        Assert.Null(_vm.ErrorMessage);
+        _viewModel.IsEditing = true;
+        _viewModel.ErrorMessage = "err";
+        _viewModel.InvokeCancelEdit();
+        Assert.False(_viewModel.IsEditing);
+        Assert.Null(_viewModel.ErrorMessage);
     }
 
     [Fact]
     public void CanSave_ReturnsExpected()
     {
-        _vm.SelectedItem = new InventoryItemModel { Name = "", StockQuantity = 1 };
-        Assert.False(_vm.InvokeCanSave());
-        _vm.SelectedItem = new InventoryItemModel { Name = "ok", StockQuantity = 1 };
-        Assert.True(_vm.InvokeCanSave());
+        _viewModel.SelectedItem = new InventoryItemModel { Name = "", StockQuantity = 1 };
+        Assert.False(_viewModel.InvokeCanSave());
+        _viewModel.SelectedItem = new InventoryItemModel { Name = "ok", StockQuantity = 1 };
+        Assert.True(_viewModel.InvokeCanSave());
     }
 
     // Helper subclass to expose protected/private methods for testing

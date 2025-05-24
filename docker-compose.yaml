@@ -3,9 +3,7 @@
 services:
   api:
     container_name: datenlotsen-inventory-api
-    build:
-      context: .
-      dockerfile: Datenlotsen.InventoryManagement.API/Dockerfile
+    image: ghcr.io/ibrahimogod/datenlotsen-inventory-management-api:latest
     ports:
       - "5155:8080"
     environment:
@@ -14,18 +12,25 @@ services:
     depends_on:
       - postgres
 
+  migrate:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    depends_on:
+      - postgres
+    working_dir: /src
+    volumes:
+      - ./:/src
+    entrypoint: ["sh", "-c", "cd Datenlotsen.InventoryManagement.Data && dotnet new tool-manifest --force && dotnet tool install dotnet-ef && dotnet ef database update -- 'Server=postgres;Port=5432;Database=datenlotsen-inventory-management;User Id=postgres;Password=123456;' && rm -rf .config/dotnet-tools.json"]
+
   postgres:
     image: postgres:16
     container_name: datenlotsen-postgres
     restart: always
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: datenlotsen-inventory-management
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432"
 
 volumes:
   postgres_data:
