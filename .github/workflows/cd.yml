@@ -105,18 +105,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Git Tag (if not exists)
-        shell: bash
+      - name: Create tag if not exists
         run: |
-          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
-            echo "Tag v${{ env.VERSION }} already exists. Skipping."
-          else
-            git config --global user.name 'GitHub Actions'
-            git config --global user.email 'github-actions@github.com'
-            git tag -a "v${{ env.VERSION }}" -m "Release v${{ env.VERSION }}"
-            git push https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/${{ github.repository }}.git "v${{ env.VERSION }}"
-          fi
+            if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+                echo "Tag v${{ env.VERSION }} already exists."
+            else
+                git config --global user.name 'GitHub Actions'
+                git config --global user.email 'github-actions@github.com'
+                git tag "v${{ env.VERSION }}"
+                git push origin "v${{ env.VERSION }}"
+                echo "Tag v${{ env.VERSION }} created and pushed."
+            fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
