@@ -11,7 +11,6 @@ namespace Datenlotsen.WPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }
