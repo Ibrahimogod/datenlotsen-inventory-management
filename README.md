@@ -1,5 +1,7 @@
 # Datenlotsen Inventory Management
 
+[![Build and Test](https://github.com/Ibrahimogod/datenlotsen-inventory-management/actions/workflows/ci.yml/badge.svg)](https://github.com/Ibrahimogod/datenlotsen-inventory-management/actions/workflows/ci.yml)
+
 This repository contains a cross-platform Inventory Management system:
 - **WPF Desktop Application** (Windows, .NET 8)
 - **RESTful API** (ASP.NET Core, .NET 8, Docker-ready)
