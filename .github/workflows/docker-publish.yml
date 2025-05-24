@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*.*.*'
     paths:
       - 'Datenlotsen.InventoryManagement/**'
       - 'Datenlotsen.InventoryManagement.API/**'
@@ -19,7 +21,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}-api
-  VERSION: ${{ github.event.inputs.version || github.ref_name }}
+  VERSION: ${{ github.event.inputs.version || (github.ref_type == 'tag' && github.ref_name) || (github.ref == 'refs/heads/main' && 'latest') || github.sha }}
 
 jobs:
   build-and-push:
@@ -98,23 +100,20 @@ jobs:
           body: |
             ## Docker Image
             The latest Docker image is available at:
-            ```
+            ```bash
             ghcr.io/${{ github.repository }}-api:latest
             ```
-
-            ### Pull the Image
+            ### Pull the Image        
             ```bash
             docker pull ghcr.io/${{ github.repository }}-api:latest
             ```
-
-            ### Run the Container
+            ### Run the Container        
             ```bash
             docker run -d \
               -p 5155:8080 \
               -e ASPNETCORE_ENVIRONMENT=Production \
               ghcr.io/${{ github.repository }}-api:${{ env.VERSION }}
             ```
-
             See the [README.md](https://github.com/${{ github.repository }}/blob/main/README.md) for more details.
           draft: false
           prerelease: false
