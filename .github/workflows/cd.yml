@@ -1,6 +1,7 @@
 name: Release WPF App and Docker Image
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - '*.*.*'
@@ -8,9 +9,29 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}-api
-  VERSION: ${{ (github.ref_type == 'tag' && github.ref_name) || github.sha }}
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+        version: ${{ steps.set_version.outputs.version }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set VERSION variable
+      id: set_version
+      run: |
+        if [[ "${GITHUB_REF_TYPE}" == "tag" && -n "${GITHUB_REF_NAME}" ]]; then
+        VERSION="${GITHUB_REF_NAME}"
+        else
+        VERSION=$(git fetch --tags && git describe --tags `git rev-list --tags --max-count=1`)
+        fi
+        echo "VERSION=$VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+
   build-wpf:
     runs-on: windows-latest
     permissions:
@@ -38,6 +59,7 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
+    needs: prepare
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -59,7 +81,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
-            type=raw,value=${{ env.VERSION }}
+            type=raw,value=${{ needs.prepare.outputs.version }}
             type=sha,prefix=,format=short
           labels: |
             org.opencontainers.image.author=ibadr
@@ -67,7 +89,7 @@ jobs:
             org.opencontainers.image.title=Datenlotsen Inventory Management API
             org.opencontainers.image.description=Inventory Management service for Datenlotsen
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
-            org.opencontainers.image.version=${{ env.VERSION }}
+            org.opencontainers.image.version=${{ needs.prepare.outputs.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -104,6 +126,17 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
+
+      - name: Determine VERSION
+        id: get_version
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            VERSION="${GITHUB_REF_NAME}"
+          else
+            VERSION=$(git fetch --tags && git describe --tags `git rev-list --tags --max-count=1`)
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       
       - name: List workspace contents
         run: |
@@ -114,8 +147,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ github.workspace }}/Datenlotsen.zip
-          tag_name: v${{ env.VERSION }}
-          name: Release v${{ env.VERSION }}
+          tag_name: ${{ needs.prepare.outputs.version }}
+          name: Release ${{ needs.prepare.outputs.version }}
           body: |
             ## WPF Application Release
             Download the ZIP file below, extract it, and run `Datenlotsen.WPF.exe` to start the application.
@@ -134,7 +167,7 @@ jobs:
             docker run -d \
               -p 5155:8080 \
               -e ASPNETCORE_ENVIRONMENT=Production \
-              ghcr.io/${{ github.repository }}-api:${{ env.VERSION }}
+              ghcr.io/${{ github.repository }}-api:${{ needs.prepare.outputs.version }}
             ```
             See the [README.md](https://github.com/${{ github.repository }}/blob/main/README.md) for more details.
           draft: false
